@@ -149,3 +149,7 @@ app.post("/login/student/regrequest", (req, res) => {
 app.listen(8000, () => {
   console.log("test 8000");
 });
+
+app.listen(process.env.PORT || PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
