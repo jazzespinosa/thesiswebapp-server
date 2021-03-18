@@ -6,8 +6,8 @@
   "proxy": "http://localhost:8000",
   "scripts": {
     "start": "node index.js",
-    "devStart": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "devStart": "nodemon index.js"
+    
   },
   "author": "",
   "license": "ISC",
