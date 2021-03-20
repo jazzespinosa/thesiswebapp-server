@@ -6,7 +6,7 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
-const PORT = 8000;
+const PORT = 3306;
 
 const db = mysql.createConnection({
   host: "thesiswebappdb.chijjd6d9cll.ap-southeast-1.rds.amazonaws.com",
