@@ -17,6 +17,13 @@ const db = mysql.createConnection({
 
 app.get("/", (req, res) => {
   res.send("running");
+  const sqlSelect = "SELECT * FROM studentprofile WHERE studentNumber=?";
+  db.query(sqlSelect, "2013-0-10518", (err, result) => {
+    res.send(result);
+    if (err) {
+      res.send({ err: err });
+    }
+  });
 });
 
 app.listen(process.env.PORT || PORT, () => {
