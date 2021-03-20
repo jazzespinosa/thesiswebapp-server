@@ -16,7 +16,7 @@ const db = mysql.createConnection({
 });
 
 app.get("/", (req, res) => {
-  res.send("running");
+  res.send("running thesistest");
   const sqlSelect = "SELECT * FROM studentprofile WHERE studentNumber=?";
   db.query(sqlSelect, "2013-0-10518", (err, result) => {
     res.send(result);
