@@ -21,14 +21,15 @@ const db = mysql.createConnection({
 
 app.get("/", (req, res) => {
   res.send("running thesistest");
-  const sqlSelect =
-    "SELECT * FROM studentprofile WHERE studentNumber=2013-0-10518";
-  db.query(sqlSelect, (err, result) => {
+  const sqlSelect = "SELECT * FROM studentprofile";
+  db.query("SELECT * FROM studentprofile", (err, result) => {
     res.send(result);
-    console.log(result);
+    console.log("result test", result);
     if (err) {
       res.send({ err: err });
-    } else res.send("success");
+    } else {
+      res.send("success");
+    }
   });
 });
 
