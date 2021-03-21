@@ -20,7 +20,7 @@ const db = mysql.createConnection({
 });
 
 app.get("/", (req, res) => {
-  res.send("running test");
+  res.send("running web app test");
   const sqlSelect = "SELECT * FROM studentprofile";
   db.query("SELECT * FROM studentprofile", (err, result) => {
     res.send(result);
