@@ -9,10 +9,14 @@ app.use(cors());
 const PORT = 3306;
 
 const db = mysql.createConnection({
-  host: "ec2-54-169-174-16.ap-southeast-1.compute.amazonaws.com",
-  user: "adminUser",
-  password: "house123",
-  database: "lpulabdb",
+  // host: "ec2-54-169-174-16.ap-southeast-1.compute.amazonaws.com",
+  // user: "adminUser",
+  // password: "house123",
+  // database: "lpulabdb",
+  host: process.env.RDS_HOSTNAME,
+  user: process.env.RDS_USERNAME,
+  password: process.env.RDS_PASSWORD,
+  port: process.env.RDS_PORT,
 });
 
 app.get("/", (req, res) => {
@@ -28,7 +32,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(process.env.PORT || PORT, () => {
+app.listen(process.env.RDS_PORT || PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
