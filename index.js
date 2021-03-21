@@ -21,6 +21,7 @@ app.get("/", (req, res) => {
     "SELECT * FROM studentprofile WHERE studentNumber=2013-0-10518";
   db.query(sqlSelect, (err, result) => {
     res.send(result);
+    console.log(result);
     if (err) {
       res.send({ err: err });
     } else res.send("success");
