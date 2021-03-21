@@ -13,10 +13,10 @@ const db = mysql.createConnection({
   // user: "adminUser",
   // password: "house123",
   // database: "lpulabdb",
-  host: process.env.RDS_HOSTNAME,
-  user: process.env.RDS_USERNAME,
-  password: process.env.RDS_PASSWORD,
-  port: process.env.RDS_PORT,
+  host: process.env.HOSTNAME,
+  user: process.env.USERNAME,
+  password: process.env.PASSWORD,
+  port: process.env.PORT,
 });
 
 app.get("/", (req, res) => {
@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(process.env.RDS_PORT || PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
