@@ -9,7 +9,7 @@ app.use(cors());
 const PORT = 3306;
 
 const db = mysql.createConnection({
-  host: "aa19x4f205aq2xp.chijjd6d9cll.ap-southeast-1.rds.amazonaws.com",
+  host: "ec2-54-169-174-16.ap-southeast-1.compute.amazonaws.com",
   user: "adminUser",
   password: "house123",
   database: "lpulabdb",
@@ -17,8 +17,9 @@ const db = mysql.createConnection({
 
 app.get("/", (req, res) => {
   res.send("running thesistest");
-  const sqlSelect = "SELECT * FROM studentprofile WHERE studentNumber=?";
-  db.query(sqlSelect, "2013-0-10518", (err, result) => {
+  const sqlSelect =
+    "SELECT * FROM studentprofile WHERE studentNumber=2013-0-10518";
+  db.query(sqlSelect, (err, result) => {
     res.send(result);
     if (err) {
       res.send({ err: err });
