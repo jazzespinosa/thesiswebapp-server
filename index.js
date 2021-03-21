@@ -9,7 +9,7 @@ app.use(cors());
 const PORT = 3306;
 
 const db = mysql.createConnection({
-  host: "thesiswebappdb.chijjd6d9cll.ap-southeast-1.rds.amazonaws.com",
+  host: "aa19x4f205aq2xp.chijjd6d9cll.ap-southeast-1.rds.amazonaws.com",
   user: "adminUser",
   password: "house123",
   database: "lpulabdb",
