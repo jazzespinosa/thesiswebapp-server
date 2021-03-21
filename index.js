@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
     res.send(result);
     if (err) {
       res.send({ err: err });
-    }
+    } else res.send("success");
   });
 });
 
