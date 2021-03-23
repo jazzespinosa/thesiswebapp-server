@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
   // });
 });
 
-connection.connect(function (err) {
+db.connect(function (err) {
   if (err) {
     console.error("Database connection failed: " + err.stack);
     return;
@@ -43,7 +43,7 @@ connection.connect(function (err) {
   console.log("Connected to database.");
 });
 
-connection.end();
+db.end();
 
 app.listen(process.env.PORT || PORT, () => {
   console.log(`Server running on port ${PORT}`);
