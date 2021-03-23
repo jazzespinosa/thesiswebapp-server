@@ -34,16 +34,18 @@ app.get("/", (req, res) => {
   // });
 });
 
-db.connect(function (err) {
-  if (err) {
-    console.error("Database connection failed: " + err.stack);
-    return;
-  }
-
-  console.log("Connected to database.");
+app.get("/test", (req, res) => {
+  const sqlSelect = "SELECT * FROM studentprofile";
+  db.query("SELECT * FROM studentprofile", (err, result) => {
+    res.send(result);
+    console.log("result test", result);
+    if (err) {
+      res.send({ err: err });
+    } else {
+      res.send("success");
+    }
+  });
 });
-
-db.end();
 
 app.listen(process.env.PORT || PORT, () => {
   console.log(`Server running on port ${PORT}`);
