@@ -22,16 +22,6 @@ const db = mysql.createConnection({
 
 app.get("/", (req, res) => {
   res.send("running web app test");
-  // const sqlSelect = "SELECT * FROM studentprofile";
-  // db.query("SELECT * FROM studentprofile", (err, result) => {
-  //   res.send(result);
-  //   console.log("result test", result);
-  //   if (err) {
-  //     res.send({ err: err });
-  //   } else {
-  //     res.send("success");
-  //   }
-  // });
 });
 
 app.get("/test", (req, res) => {
@@ -52,7 +42,7 @@ app.listen(process.env.PORT || PORT, () => {
 });
 
 //STUDENT REGISTRATION
-app.post("/check/student/profile", (req, res) => {
+app.get("/check/student/profile", (req, res) => {
   const studentNumber = req.body.studentNumber;
 
   const sqlSelect = "SELECT * FROM studentprofile WHERE studentNumber=?";
@@ -63,7 +53,7 @@ app.post("/check/student/profile", (req, res) => {
     }
   });
 });
-app.post("/check/student/regrequest", (req, res) => {
+app.get("/check/student/regrequest", (req, res) => {
   const studentNumber = req.body.studentNumber;
 
   const sqlSelect = "SELECT * FROM studentregrequest WHERE studentNumber=?";
@@ -111,7 +101,7 @@ app.post("/insert/student", (req, res) => {
 });
 
 //FACULTY REGISTRATION
-app.post("/check/faculty/profile", (req, res) => {
+app.get("/check/faculty/profile", (req, res) => {
   const facultyID = req.body.facultyID;
 
   const sqlSelect = "SELECT * FROM facultyprofile WHERE facultyID=?";
@@ -122,7 +112,7 @@ app.post("/check/faculty/profile", (req, res) => {
     }
   });
 });
-app.post("/check/faculty/regrequest", (req, res) => {
+app.get("/check/faculty/regrequest", (req, res) => {
   const facultyID = req.body.facultyID;
 
   const sqlSelect = "SELECT * FROM facultyregrequest WHERE facultyID=?";
@@ -157,7 +147,7 @@ app.post("/insert/faculty", (req, res) => {
 });
 
 //STUDENT LOGIN
-app.post("/login/student/profile", (req, res) => {
+app.get("/login/student/profile", (req, res) => {
   const studentNumber = req.body.studentNumber;
   const password = req.body.password;
 
@@ -170,7 +160,7 @@ app.post("/login/student/profile", (req, res) => {
     }
   });
 });
-app.post("/login/student/regrequest", (req, res) => {
+app.get("/login/student/regrequest", (req, res) => {
   const studentNumber = req.body.studentNumber;
   const password = req.body.password;
 
