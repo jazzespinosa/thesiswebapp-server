@@ -22,17 +22,28 @@ const db = mysql.createConnection({
 
 app.get("/", (req, res) => {
   res.send("running web app test");
-  const sqlSelect = "SELECT * FROM studentprofile";
-  db.query("SELECT * FROM studentprofile", (err, result) => {
-    res.send(result);
-    console.log("result test", result);
-    if (err) {
-      res.send({ err: err });
-    } else {
-      res.send("success");
-    }
-  });
+  // const sqlSelect = "SELECT * FROM studentprofile";
+  // db.query("SELECT * FROM studentprofile", (err, result) => {
+  //   res.send(result);
+  //   console.log("result test", result);
+  //   if (err) {
+  //     res.send({ err: err });
+  //   } else {
+  //     res.send("success");
+  //   }
+  // });
 });
+
+connection.connect(function (err) {
+  if (err) {
+    console.error("Database connection failed: " + err.stack);
+    return;
+  }
+
+  console.log("Connected to database.");
+});
+
+connection.end();
 
 app.listen(process.env.PORT || PORT, () => {
   console.log(`Server running on port ${PORT}`);
