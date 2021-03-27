@@ -6,18 +6,14 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
-const PORT = 3306;
+const PORT = 8000;
 
-const db = mysql.createConnection({
-  // host: "ec2-54-169-174-16.ap-southeast-1.compute.amazonaws.com",
-  // user: "adminUser",
-  // password: "house123",
-  // database: "lpulabdb",
-  host: process.env.RDS_HOSTNAME,
-  user: process.env.RDS_USERNAME,
-  password: process.env.RDS_PASSWORD,
-  port: process.env.RDS_PORT,
-  database: process.env.RDS_DB_NAME,
+const pool = mysql.createPool({
+  connectionLimit: 30,
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "lpulabdb_test",
 });
 
 app.get("/", (req, res) => {
@@ -26,14 +22,16 @@ app.get("/", (req, res) => {
 
 app.get("/test", (req, res) => {
   const sqlSelect = "SELECT * FROM studentprofile";
-  db.query("SELECT * FROM studentprofile", (err, result) => {
-    res.send(result);
-    console.log("result test", result);
-    if (err) {
-      res.send({ err: err });
-    } else {
-      res.send("success");
-    }
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query("SELECT * FROM studentprofile", (err, result) => {
+      connection.release();
+      if (!err) {
+        res.send({ result });
+      } else {
+        console.log(err);
+      }
+    });
   });
 });
 
@@ -46,7 +44,7 @@ app.get("/check/student/profile", (req, res) => {
   const studentNumber = req.body.studentNumber;
 
   const sqlSelect = "SELECT * FROM studentprofile WHERE studentNumber=?";
-  db.query(sqlSelect, [studentNumber], (err, result) => {
+  pool.query(sqlSelect, [studentNumber], (err, result) => {
     res.send(result);
     if (err) {
       res.send({ err: err });
@@ -57,7 +55,7 @@ app.get("/check/student/regrequest", (req, res) => {
   const studentNumber = req.body.studentNumber;
 
   const sqlSelect = "SELECT * FROM studentregrequest WHERE studentNumber=?";
-  db.query(sqlSelect, [studentNumber], (err, result) => {
+  pool.query(sqlSelect, [studentNumber], (err, result) => {
     res.send(result);
     if (err) {
       res.send({ err: err });
@@ -77,7 +75,7 @@ app.post("/insert/student", (req, res) => {
 
   const sqlInsert =
     "INSERT INTO studentregrequest (studentNumber, password, lastName, firstName, middleName, course, year, section, phoneNumber, timeRegistered, dateRegistered ) VALUES (?,?,?,?,?,?,?,?,?,NOW(),NOW())";
-  db.query(
+  pool.query(
     sqlInsert,
     [
       studentNumber,
@@ -105,7 +103,7 @@ app.get("/check/faculty/profile", (req, res) => {
   const facultyID = req.body.facultyID;
 
   const sqlSelect = "SELECT * FROM facultyprofile WHERE facultyID=?";
-  db.query(sqlSelect, [facultyID], (err, result) => {
+  pool.query(sqlSelect, [facultyID], (err, result) => {
     res.send(result);
     if (err) {
       res.send({ err: err });
@@ -116,7 +114,7 @@ app.get("/check/faculty/regrequest", (req, res) => {
   const facultyID = req.body.facultyID;
 
   const sqlSelect = "SELECT * FROM facultyregrequest WHERE facultyID=?";
-  db.query(sqlSelect, [facultyID], (err, result) => {
+  pool.query(sqlSelect, [facultyID], (err, result) => {
     res.send(result);
     if (err) {
       res.send({ err: err });
@@ -133,7 +131,7 @@ app.post("/insert/faculty", (req, res) => {
 
   const sqlInsert =
     "INSERT INTO facultyregrequest (facultyID, password, lastName, firstName, middleName, phoneNumber, timeRegistered, dateRegistered) VALUES (?,?,?,?,?,?,NOW(), NOW())";
-  db.query(
+  pool.query(
     sqlInsert,
     [facultyID, password, lastname, firstName, middleName, phNumber],
     (err, result) => {
@@ -153,7 +151,7 @@ app.get("/login/student/profile", (req, res) => {
 
   const sqlSelect =
     "SELECT * FROM studentprofile WHERE studentNumber=? AND password=?";
-  db.query(sqlSelect, [studentNumber, password], (err, result) => {
+  pool.query(sqlSelect, [studentNumber, password], (err, result) => {
     res.send(result);
     if (err) {
       res.send({ err: err });
@@ -166,7 +164,7 @@ app.get("/login/student/regrequest", (req, res) => {
 
   const sqlSelect =
     "SELECT * FROM studentregrequest WHERE studentNumber=? AND password=?";
-  db.query(sqlSelect, [studentNumber, password], (err, result) => {
+  pool.query(sqlSelect, [studentNumber, password], (err, result) => {
     res.send(result);
     if (err) {
       res.send({ err: err });
