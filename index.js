@@ -17,7 +17,7 @@ const pool = mysql.createPool({
 });
 
 app.get("/", (req, res) => {
-  res.send("running web app test");
+  res.send("running web app test updated");
 });
 
 app.get("/test", (req, res) => {
